@@ -1,0 +1,66 @@
+// 1. Abstract class (Abstraction)
+abstract class Employee {
+  String name;
+  int id;
+
+  Employee(this.name, this.id); // Constructor
+
+  // Abstract method that must be implemented by subclasses
+  void displayDetails();
+}
+
+// 2. Base class with Encapsulation
+class Manager extends Employee {
+  // Private variable
+  double _salary;
+
+  Manager(String name, int id, this._salary) : super(name, id);
+
+  // Getter for private _salary
+  double get salary => _salary;
+
+  // Setter for private _salary
+  set salary(double value) {
+    if (value > 0) {
+      _salary = value;
+    } else {
+      print("Invalid salary value!");
+    }
+  }
+
+  // Overriding the abstract method (Polymorphism)
+  @override
+  void displayDetails() {
+    print("Manager: $name, ID: $id, Salary: \$$_salary");
+  }
+}
+
+// 3. Subclass inheriting from Manager (Polymorphism and Inheritance)
+class Developer extends Manager {
+  String programmingLanguage;
+
+  Developer(String name, int id, double salary, this.programmingLanguage)
+      : super(name, id, salary);
+
+  // Overriding the displayDetails method (Polymorphism)
+  @override
+  void displayDetails() {
+    print(
+        "Developer: $name, ID: $id, Salary: \$${salary}, Programming Language: $programmingLanguage");
+  }
+}
+
+void main() {
+  // Creating instances of subclasses
+  Manager manager = Manager("Alice", 101, 85000);
+  Developer developer = Developer("Bob", 102, 90000, "Dart");
+
+  // Encapsulation: Accessing private variables through getter and setter
+  print("Manager's Salary: \$${manager.salary}");
+  manager.salary = 95000; // Updating salary using setter
+  print("Updated Manager's Salary: \$${manager.salary}");
+
+  // Demonstrating polymorphism by calling displayDetails on different objects
+  manager.displayDetails();  // Output: Manager: Alice, ID: 101, Salary: $95000
+  developer.displayDetails(); // Output: Developer: Bob, ID: 102, Salary: $90000, Programming Language: Dart
+}
